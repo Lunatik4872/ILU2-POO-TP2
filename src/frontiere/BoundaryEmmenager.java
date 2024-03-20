@@ -1,6 +1,7 @@
 package frontiere;
 
 import controleur.ControlEmmenager;
+import personnages.Gaulois;
 
 public class BoundaryEmmenager {
 	private ControlEmmenager controlEmmenager;
@@ -17,7 +18,7 @@ public class BoundaryEmmenager {
 			StringBuilder question = new StringBuilder();
 			question.append("Êtes-vous :\n");
 			question.append("1 - un druide.\n");
-			question.append("2 - un gaulois.\n");
+			question.append("2 - un gaulois.");
 			int choixUtilisateur = -1;
 			do {
 				choixUtilisateur = Clavier.entrerEntier(question.toString());
@@ -27,7 +28,9 @@ public class BoundaryEmmenager {
 					break;
 
 				case 2:
-					//TODO a completer
+					System.out.println("Bienvenue villageois "+nomVisiteur);
+					int choixForce = Clavier.entrerEntier("Quelle est votre force ?");
+					controlEmmenager.ajouterGaulois(nomVisiteur, choixForce);
 					break;
 
 				default:
@@ -40,6 +43,17 @@ public class BoundaryEmmenager {
 	}
 
 	private void emmenagerDruide(String nomVisiteur) {
-		//TODO a completer
+		int choixForce, choixForcePotionFaible, choixForcePotionForte;
+		System.out.println("Bienvenue druide "+nomVisiteur);
+		choixForce = Clavier.entrerEntier("Quelle est votre force ?");
+		choixForcePotionFaible = Clavier.entrerEntier("Quelle est la force de la potion la plus faible que vous pouvez produire ?");
+		choixForcePotionForte = Clavier.entrerEntier("Quelle est la force de la potion la plus forte que vous pouvez produire ?");
+		if(choixForcePotionFaible>choixForcePotionForte) {
+			System.out.println("Attention Druide, vous vous êtes trompé entre le minimum et le maximum");
+			int temp = choixForcePotionFaible;
+		    choixForcePotionFaible = choixForcePotionForte;
+		    choixForcePotionForte = temp;
+		}
+		controlEmmenager.ajouterDruide(nomVisiteur, choixForce, choixForcePotionFaible, choixForcePotionForte);
 	}
 }
